@@ -55,7 +55,7 @@ export default function EarlyBird() {
       <div className="w-[214px] bg-[#B72321] absolute right-14 text-[#FEFEFE] py-8 px-2">
         <h2 className="text-lg">Course starts</h2>
         <h2 className="text-3xl font-semibold">26th January 2026</h2>
-        <h2 className="text-lg italic">Classes will be live and on demand</h2>
+        <h2 className="text-lg italic">Classes will be live and on-demand</h2>
       </div>
       <div className="flex flex-col items-center pt-28">
         <p className="text-3xl md:text-4xl xl:text-5xl font-normal text-center leading-none md:leading-[100%] tracking-[-2px] mb-6 ">
@@ -83,7 +83,7 @@ export default function EarlyBird() {
         </div>
 
         <h6 className="text-[#848181] text-2xl leading-none md:text-[32px] xl:text-[36px] md:leading-[1.3] tracking-[-2px]  mt-8">
-          Includes portfolio and CV reviews
+          Includes portfolio and CV reviews*
         </h6>
         <h6 className="italic mb-8 md:mb-10 xl:mb-16 text-[#848181]">
           *Available upon request
