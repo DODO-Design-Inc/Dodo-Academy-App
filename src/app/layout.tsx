@@ -4,6 +4,7 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import Head from "next/head";
 import React from "react";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -64,6 +65,7 @@ export const metadata = {
   ],
 };
 
+const isProduction = process.env.NODE_ENV === "production";
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
@@ -122,6 +124,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         <NavBar />
         {children}
         <Footer />
+        {isProduction && <GoogleAnalytics />}
       </body>
     </html>
   );
