@@ -52,21 +52,21 @@ export default function EarlyBird() {
       className="text-center bg-[#171D20] pb-20 text-[#FEFEFE] relative"
       id="pricing"
     >
-      <div className="w-[185px] md:w-[214px] bg-[#B72321] absolute right-6 md:right-14 text-[#FEFEFE] py-8 px-2">
+      <div className="w-[185px] md:w-[214px] bg-[#B72321] absolute right-1/4 md:right-14 text-[#FEFEFE] py-8 px-2">
         <h2 className="text-sm md:text-xl">Course starts</h2>
         <h2 className="text-xl md:text-3xl font-semibold">26th January 2026</h2>
-        <h2 className="text-xs md:text-lg italic leading-[0.9] mt-4">
+        <h2 className="text-xs md:text-lg italic leading-[0.9] mt-4 ">
           Classes will be live and on-demand
         </h2>
       </div>
-      <div className="flex flex-col items-center pt-28">
+      <div className="flex flex-col items-center pt-48 md:pt-28">
         <p className="text-3xl md:text-4xl xl:text-5xl font-normal text-center leading-none md:leading-[100%] tracking-[-2px] mb-6 ">
           Early bird discount
         </p>
         <h1 className="text-[60px] md:text-[128px] xl:text-[150px] font-medium ">
           ₦55,000
         </h1>
-        <h5 className=" text-[#FEFEFEE5]/90 text-[70px] relative">
+        <h5 className=" text-[#FEFEFEE5]/90 text-4xl md:text-[58px] xl:text-[70px] relative mb-5">
           ₦75,000
           <span className="absolute border-2 border-[#ED421B] w-full left-0 top-1/2"></span>
         </h5>

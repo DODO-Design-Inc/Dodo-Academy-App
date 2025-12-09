@@ -122,13 +122,6 @@ export default function NavBar() {
             >
               FAQs
             </Link>
-            <Link
-              onClick={() => setIsMobileMenuOpen(false)}
-              href="#pricing"
-              className="my-auto px-[22px] text-sm font-semibold text-white py-5 hover:bg-[#333] transition-colors duration-500"
-            >
-              Pricing
-            </Link>
           </div>
         </div>
       )}
