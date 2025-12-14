@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
-export default function () {
+export default function Start() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [captchaToken, setCaptchaToken] = useState(null);
 
   const pathName = usePathname();
 
@@ -16,6 +18,7 @@ export default function () {
     setSubmitted(false);
     setError("");
     setEmail("");
+    setCaptchaToken(null);
   }, [pathName]);
 
   const validateEmail = (email: string) => {
@@ -41,11 +44,16 @@ export default function () {
       return;
     }
 
+    if (!captchaToken) {
+      setError("Please verify that you are not a robot");
+      return;
+    }
+
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), captchaToken }),
       });
 
       const data = await res.json();
@@ -57,25 +65,24 @@ export default function () {
       // Success - show thank you message
       setSubmitted(true);
       setEmail("");
+      setCaptchaToken(null);
 
       // Trigger download using a temporary link
       if (typeof window !== "undefined") {
         // Create an anchor element
         const link = document.createElement("a");
-        
+
         // Set the href to your file
         link.href = "/academy/Processcards.pdf";
-        
+
         // Add the download attribute to force download
         link.setAttribute("download", "Processcards.pdf");
-        
+
         // Append link to the body, click it, and then remove it
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
       }
-      // --- END: THE FIX ---
-
     } catch (err: any) {
       setError(err.message || "Something went wrong. Please try again.");
     } finally {
@@ -107,10 +114,10 @@ export default function () {
           />
           <div className="absolute w-[268.83px] left-[22.34px] bottom-[29.34px] text-[#1E1E1E] pl-[14.8px] py-[10.72px] bg-white rounded-md">
             <h5 className="font-medium text-[21.45px] leading-[100%] mb-[3.57px]">
-            Process card
+              Process card
             </h5>
             <p className="text-[8.94px] leading-[1.4] tracing-[-2%]">
-            An end-to-end process guide for researchers and designers
+              An end-to-end process guide for researchers and designers
             </p>
           </div>
         </div>
@@ -144,9 +151,15 @@ export default function () {
                   className="w-full bg-white py-5 rounded-sm placeholder:text-[#667085] px-[17.6px] text-black mb-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
                 {error && (
-                  <p className="text-red-400 text-xs mb-2 px-[17.6px]">{error}</p>
+                  <p className="text-red-400 text-xs mb-2 px-[17.6px]">
+                    {error}
+                  </p>
                 )}
               </div>
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                onChange={(token: any) => setCaptchaToken(token)}
+              />
               <button
                 type="submit"
                 disabled={submitting}
@@ -169,10 +182,10 @@ export default function () {
           />
           <div className="absolute w-[268.83px] xl:w-[415px] left-[22.34px] bottom-[29.34px] text-[#1E1E1E] pl-[14.8px] py-[10.72px] bg-white rounded-[4.9px] xl:rounded-lg">
             <h5 className="font-medium text-[28.45px] xl:text-[46.3px] leading-[100%] mb-[3.57px]">
-            Process cards
+              Process cards
             </h5>
             <p className="text-[8.61px] xl:text-[14px] leading-[1.4] tracing-[-2%]">
-            An end-to-end process guide for researchers and designers
+              An end-to-end process guide for researchers and designers
             </p>
           </div>
         </div>
@@ -219,9 +232,15 @@ export default function () {
                   className="w-full bg-white py-5 rounded-sm placeholder:text-[#667085] px-[17.6px] text-black mb-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
                 {error && (
-                  <p className="text-red-400 text-xs mb-2 px-[17.6px]">{error}</p>
+                  <p className="text-red-400 text-xs mb-2 px-[17.6px]">
+                    {error}
+                  </p>
                 )}
               </div>
+              <ReCAPTCHA
+                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                onChange={(token: any) => setCaptchaToken(token)}
+              />
               <button
                 type="submit"
                 disabled={submitting}
