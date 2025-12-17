@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import TermsModal from "./TermsModal";
 
 type Props = {
   open: boolean;
@@ -16,6 +17,7 @@ export default function EnrollModal({ open, onClose }: Props) {
   const [phone, setPhone] = useState("");
   const [agree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const amountNGN = 55000;
 
@@ -62,93 +64,117 @@ export default function EnrollModal({ open, onClose }: Props) {
     "peer-focus:font-medium absolute text-sm text-[#34393E] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-yellow-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6";
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-start items-start p-4">
-      <div className="absolute inset-0 bg-black opacity-60" onClick={onClose} />
+    <>
+      <div className="fixed inset-0 z-50 flex justify-start items-start p-4">
+        <div
+          className="absolute inset-0 bg-black opacity-60"
+          onClick={onClose}
+        />
 
-      <div className="relative w-full max-w-3xl bg-white text-[#34393E] p-8 rounded-lg text-left mx-auto my-auto">
-        <h2 className="text-3xl mb-8">Enroll for this course</h2>
+        <div className="relative w-full max-w-3xl bg-white text-[#34393E] p-8 rounded-lg text-left mx-auto my-auto">
+          <h2 className="text-3xl mb-8">Enroll for this course</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-2 gap-6 mb-10">
-            {/* First Name */}
-            <div className="relative z-0 w-full group">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              {/* First Name */}
+              <div className="relative z-0 w-full group">
+                <input
+                  type="text"
+                  name="firstName"
+                  className={inputClass}
+                  placeholder=" "
+                  required
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+                <label className={labelClass}>FIRST NAME *</label>
+              </div>
+
+              {/* Last Name */}
+              <div className="relative z-0 w-full group">
+                <input
+                  type="text"
+                  name="lastName"
+                  className={inputClass}
+                  placeholder=" "
+                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+                <label className={labelClass}>LAST NAME *</label>
+              </div>
+            </div>
+
+            {/* Email */}
+            <div className="relative z-0 w-full group mb-10">
               <input
-                type="text"
-                name="firstName"
+                type="email"
+                name="email"
                 className={inputClass}
                 placeholder=" "
                 required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <label className={labelClass}>FIRST NAME *</label>
+              <label className={labelClass}>EMAIL ADDRESS *</label>
             </div>
 
-            {/* Last Name */}
-            <div className="relative z-0 w-full group">
+            {/* Phone */}
+            <div className="relative z-0 w-full group mb-10">
               <input
-                type="text"
-                name="lastName"
+                type="tel"
+                name="phone"
                 className={inputClass}
                 placeholder=" "
-                required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
-              <label className={labelClass}>LAST NAME *</label>
+              <label className={labelClass}>PHONE NUMBER</label>
             </div>
-          </div>
 
-          {/* Email */}
-          <div className="relative z-0 w-full group mb-10">
-            <input
-              type="email"
-              name="email"
-              className={inputClass}
-              placeholder=" "
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label className={labelClass}>EMAIL ADDRESS *</label>
-          </div>
+            {/* Checkbox */}
+            <div className="flex items-start gap-3 mt-4">
+              <input
+                type="checkbox"
+                className="w-5 h-5 accent-yellow-400 mt-0.5 cursor-pointer"
+                checked={agree}
+                onChange={(e) => setAgree(e.target.checked)}
+              />
+              <span className="text-lg text-gray-700 leading-tight">
+                I agree to DODO collecting my personal information in order to
+                receive updates and communications.
+              </span>
+            </div>
 
-          {/* Phone */}
-          <div className="relative z-0 w-full group mb-10">
-            <input
-              type="tel"
-              name="phone"
-              className={inputClass}
-              placeholder=" "
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <label className={labelClass}>PHONE NUMBER</label>
-          </div>
+            <button
+              type="submit"
+              className="w-full py-3 bg-[#F1B130] font-semibold rounded-md hover:bg-yellow-500 transition-colors mt-6"
+              disabled={loading}
+            >
+              {loading
+                ? "Processing..."
+                : `PAY NGN${amountNGN.toLocaleString()}`}
+            </button>
 
-          {/* Checkbox */}
-          <div className="flex items-start gap-3 mt-4">
-            <input
-              type="checkbox"
-              className="w-5 h-5 accent-yellow-400 mt-0.5 cursor-pointer"
-              checked={agree}
-              onChange={(e) => setAgree(e.target.checked)}
-            />
-            <span className="text-lg text-gray-700 leading-tight">
-              I agree to DODO collecting my personal information in order to
-              receive updates and communications.
-            </span>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full py-3 bg-[#F1B130] font-semibold rounded-md hover:bg-yellow-500 transition-colors mt-6"
-            disabled={loading}
-          >
-            {loading ? "Processing..." : `PAY NGN${amountNGN.toLocaleString()}`}
-          </button>
-        </form>
+            <p className="text-lg text-[#34393E] font-medium mt-4 text-center">
+              By clicking{" "}
+              <span className="">
+                “Pay NGN{amountNGN.toLocaleString()}”
+              </span>
+              , you agree to our{" "}
+              <button
+                type="button"
+                onClick={() => setShowTerms(true)}
+                className="underline underline-offset-2 text-[#F1B130] hover:text-black"
+              >
+                Terms & Conditions.
+              </button>
+            </p>
+          </form>
+        </div>
       </div>
-    </div>
+
+      <TermsModal open={showTerms} onClose={() => setShowTerms(false)} />
+    </>
   );
 }
